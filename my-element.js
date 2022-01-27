@@ -20,7 +20,10 @@ export class MyElement extends LitElement {
         display: block;
         border: solid 1px gray;
         padding: 16px;
-        max-width: 800px;
+        width: 95%;
+        margin: 2px auto;
+        position: relative;
+        background-color: #85929E;
       }
     `;
   }
@@ -32,7 +35,7 @@ export class MyElement extends LitElement {
        * @type {string}
        */
       name: {type: String},
-
+      carName: {type: String},
       /**
        * The number of times the button has been clicked.
        * @type {number}
@@ -43,21 +46,26 @@ export class MyElement extends LitElement {
 
   constructor() {
     super();
-    this.name = 'World';
+    this.name = '.......';
+    this.carName = '......';
     this.count = 0;
   }
 
   render() {
     return html`
-      <h1>${this.sayHello(this.name)}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
       <slot></slot>
+      <input @input='${this.myCar}'>
+      <button @click=${this._onClick} part="button">
+        ჩააჭირე გაზსააა
+      </button>
+      <h1>გამოვარდა აქანა: ${this.name}</h1>
+      <h2>მოიძებნა: ${this.carName}</h2>
+      <h3>ჩავაჭირე ${this.count} ჯერ გაზსაა</h3>
     `;
   }
 
   _onClick() {
+    this.carName++;
     this.count++;
     this.dispatchEvent(new CustomEvent('count-changed'));
   }
@@ -67,8 +75,15 @@ export class MyElement extends LitElement {
    * @param name {string} The name to say "Hello" to
    * @returns {string} A greeting directed at `name`
    */
-  sayHello(name) {
-    return `Hello, ${name}`;
+  myCar(subaru) {
+    var value = subaru.target.value;
+    console.log(value);
+    this.name = value;
+  }
+  carName(mashina) {
+    var value = mashina.target.value;
+    console.log(value);
+    this.name = value;
   }
 }
 
